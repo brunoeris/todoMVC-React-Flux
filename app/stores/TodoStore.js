@@ -49,15 +49,13 @@ _saveAll = function (checked) {
 
 _remove = function (id) {
     _.remove(_todos, {id: id});
-
     localStorage.setItem("todos", JSON.stringify(_todos));
 };
 
 _removeCompletos = function(){
-        _.remove(_todos, {"complete": true});
+    _.remove(_todos, {"complete": true});
 
-        localStorage.setItem("todos", JSON.stringify(_todos));
-
+    localStorage.setItem("todos", JSON.stringify(_todos));
 };
 
 TodoStore.getTodos = function () {
@@ -91,11 +89,11 @@ TodoStore.id = Dispatcher.register(function (payload) {
             _remove(payload.data);
             TodoStore.publish(Evt.REQUEST_SUCCESS, payload);
             break;
+
         case Act.REMOVE_ALL:
             _removeCompletos();
             TodoStore.publish(Evt.REQUEST_SUCCESS, payload);
             break;
-
     }
 });
 

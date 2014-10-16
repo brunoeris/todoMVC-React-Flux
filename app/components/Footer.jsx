@@ -5,11 +5,25 @@ var _ = require("lodash"),
 
 module.exports = React.createClass({
 
-    render: function () {
-        var todos = this.props.todos,
-            totalComplete = _.filter(todos, "complete").length,
-            totalIncomplete = todos.length - totalComplete;
+    componentDidMount: function (e) {
+      document.querySelector('footer').style.visibility="hidden";
+    },
 
+    render: function () {
+          var todos = this.props.todos,
+              totalComplete = _.filter(todos, "complete").length,
+              totalIncomplete = todos.length - totalComplete,
+              getFooter = document.querySelector('footer');
+    
+              if(todos == null || todos.length == 0){
+                  if (getFooter == null) {
+                      console.log(todos);
+                  } else {
+                      document.querySelector('footer').style.visibility="hidden";
+                    }
+              } else {
+                  document.querySelector('footer').style.visibility="visible";
+                };
 
         return (
             <footer id="footer">
@@ -17,7 +31,7 @@ module.exports = React.createClass({
                     <strong>{totalIncomplete}</strong> todos restante
                 </span>
 
-                <ul id="filters"> 
+                <ul id="filters">
                   <li>
                     <a href="all" className="selected">All</a>
                   </li>
@@ -30,7 +44,7 @@ module.exports = React.createClass({
                 </ul>
 
                 <button id="clear-completed"
-                    onClick={TodoAction.removeAll}>
+                  onClick={TodoAction.removeAll}>
                   Clear completed ({totalComplete})
                 </button>
             </footer>

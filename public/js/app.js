@@ -222,11 +222,25 @@
 
 	module.exports = React.createClass({displayName: 'exports',
 
-	    render: function () {
-	        var todos = this.props.todos,
-	            totalComplete = _.filter(todos, "complete").length,
-	            totalIncomplete = todos.length - totalComplete;
+	    componentDidMount: function (e) {
+	      document.querySelector('footer').style.visibility="hidden";
+	    },
 
+	    render: function () {
+	          var todos = this.props.todos,
+	              totalComplete = _.filter(todos, "complete").length,
+	              totalIncomplete = todos.length - totalComplete,
+	              getFooter = document.querySelector('footer');
+	    
+	              if(todos == null || todos.length == 0){
+	                  if (getFooter == null) {
+	                      console.log(todos);
+	                  } else {
+	                      document.querySelector('footer').style.visibility="hidden";
+	                    }
+	              } else {
+	                  document.querySelector('footer').style.visibility="visible";
+	                };
 
 	        return (
 	            React.DOM.footer({id: "footer"}, 
@@ -247,7 +261,7 @@
 	                ), 
 
 	                React.DOM.button({id: "clear-completed", 
-	                    onClick: TodoAction.removeAll}, 
+	                  onClick: TodoAction.removeAll}, 
 	                  "Clear completed (", totalComplete, ")"
 	                )
 	            )
@@ -311,15 +325,13 @@
 
 	_remove = function (id) {
 	    _.remove(_todos, {id: id});
-
 	    localStorage.setItem("todos", JSON.stringify(_todos));
 	};
 
 	_removeCompletos = function(){
-	        _.remove(_todos, {"complete": true});
+	    _.remove(_todos, {"complete": true});
 
-	        localStorage.setItem("todos", JSON.stringify(_todos));
-
+	    localStorage.setItem("todos", JSON.stringify(_todos));
 	};
 
 	TodoStore.getTodos = function () {
@@ -353,11 +365,11 @@
 	            _remove(payload.data);
 	            TodoStore.publish(Evt.REQUEST_SUCCESS, payload);
 	            break;
+
 	        case Act.REMOVE_ALL:
 	            _removeCompletos();
 	            TodoStore.publish(Evt.REQUEST_SUCCESS, payload);
 	            break;
-
 	    }
 	});
 
@@ -377,6 +389,7 @@
 		Act = __webpack_require__(3).Act;
 
 	module.exports = {
+
 		/**
 		 * Método para adicionar um novo todo ou atualizar um existente.
 		 */ 
@@ -405,8 +418,7 @@
 		},
 		
 		removeAll: function(){
-			Dispatcher.dispatch(
-			{
+			Dispatcher.dispatch({
 				action: Act.REMOVE_ALL,
 				source: Src.TODO
 			});
@@ -609,10 +621,6 @@
 				TodoAction.save(todo);
 			}
 		},
-		remove_all: function(e){
-			TodoAction.removeAll(Footer.contarCompletos);
-		},
-
 		
 	    render: function () {
 	    	var todo = this.props.todo;

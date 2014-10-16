@@ -51,10 +51,6 @@ module.exports = React.createClass({
 			TodoAction.save(todo);
 		}
 	},
-	remove_all: function(e){
-		TodoAction.removeAll(Footer.contarCompletos);
-	},
-
 	
     render: function () {
     	var todo = this.props.todo;

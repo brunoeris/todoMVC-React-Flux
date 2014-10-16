@@ -8,6 +8,7 @@ var Dispatcher = require("Dispatcher"),
 	Act = require("Constants").Act;
 
 module.exports = {
+
 	/**
 	 * Método para adicionar um novo todo ou atualizar um existente.
 	 */ 
@@ -36,8 +37,7 @@ module.exports = {
 	},
 	
 	removeAll: function(){
-		Dispatcher.dispatch(
-		{
+		Dispatcher.dispatch({
 			action: Act.REMOVE_ALL,
 			source: Src.TODO
 		});
