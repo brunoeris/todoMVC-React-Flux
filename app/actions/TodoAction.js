@@ -1,4 +1,4 @@
-/*jshint node:true, nomen:true, white:true*/
+/*jshint node:true, undef:true, unused:true*/
 
 "use strict";
 
@@ -11,7 +11,16 @@ module.exports = {
 
 	/**
 	 * Método para adicionar um novo todo ou atualizar um existente.
-	 */ 
+	 */
+
+	filter: function (filter) {
+		Dispatcher.dispatch({
+			action: Act.FILTER,
+			source: Src.TODO,
+			data: filter
+		});
+	},
+
 	save: function (todo) {
 		Dispatcher.dispatch({
 			action: Act.SAVE,

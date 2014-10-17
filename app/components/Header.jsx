@@ -1,3 +1,7 @@
+/*jshint node:true, undef:true, unused:true*/
+
+"use strict";
+
 var React = require("react"),
  	TodoAction = require("actions/TodoAction");
 

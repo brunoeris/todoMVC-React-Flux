@@ -1,11 +1,17 @@
+/*jshint node:true,  undef:true, unused:true, newcap:false*/
+
+"use strict";
+
 var React = require("react"),
     Header = require("./Header"),
     Main = require("./Main"),
     TodoStore = require("stores/TodoStore"),
+    TodoAction = require("actions/TodoAction"),
     Evt = require("Constants").Evt,
+    Todo = require("Constants").Todo,
     Act = require("Constants").Act,
     Footer = require("./Footer"),
-    TodoAction = require("actions/TodoAction");
+    Router = require("director").Router;
 
 module.exports = React.createClass({
 
@@ -14,7 +20,22 @@ module.exports = React.createClass({
             todos: TodoStore.getTodos()
         };
     },
+
     componentWillMount: function () {
+         var routes = {
+                '/': function () {
+                    TodoAction.filter(Todo.ALL);
+                },
+                '/active': TodoAction.filter.bind(this, Todo.ACTIVE),
+                '/completed': function () {
+                    TodoAction.filter(Todo.COMPLETED);
+                }
+              };
+
+        var router = Router(routes);
+        
+        router.configure({html5history:true}).init();
+
         TodoStore.subscribe(Evt.REQUEST_SUCCESS, this.handleRequestSuccess);
     },
 
@@ -38,7 +59,7 @@ module.exports = React.createClass({
             <section id="todoapp">
                 <Header />
                 <Main todos = {this.state.todos}/>
-                <Footer todos = {this.state.todos}/>
+                <Footer todos = {this.state.todos} routes={this.router}/>
             </section>
         );
     }

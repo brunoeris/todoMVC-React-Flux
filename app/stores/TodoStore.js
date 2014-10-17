@@ -1,5 +1,5 @@
 /*jshint node:true, undef:true, unused:true*/
-/*global $*/
+/*global localStorage*/
 
 "use strict";
 
@@ -19,10 +19,15 @@ var _ = require("lodash"),
     _todos = JSON.parse(localStorage.getItem("todos")) || [],
 
     // Métodos privados
+    _filter,
     _save,
     _saveAll,
     _removeCompletos,
     _remove;
+
+_filter = function (filter) {
+    console.log(filter);
+};
 
 // Cria ou atualiza um item
 _save = function (todo) {
@@ -75,6 +80,11 @@ TodoStore.id = Dispatcher.register(function (payload) {
     }
 
     switch (payload.action) {
+        case Act.FILTER:
+            _filter(payload.data);
+            TodoStore.publish(Evt.REQUEST_SUCCESS, payload);
+            break;
+
         case Act.SAVE:
             _save(payload.data);
             TodoStore.publish(Evt.REQUEST_SUCCESS, payload);

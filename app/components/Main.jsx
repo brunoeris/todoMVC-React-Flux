@@ -1,3 +1,7 @@
+/*jshint node:true, undef:true, unused:true*/
+
+"use strict";
+
 var _ = require("lodash"),
 	React = require("react"),
 

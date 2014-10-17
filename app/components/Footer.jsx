@@ -1,30 +1,60 @@
+/*jshint node:true, undef:true, unused:true*/
+
+"use strict";
+
 var _ = require("lodash"),
     React = require("react"),
-    TodoStore = require("stores/TodoStore"),
-    TodoAction = require("actions/TodoAction");
+    TodoAction = require("actions/TodoAction"),
+    Todo = require("Constants").Todo;
 
 module.exports = React.createClass({
 
-    componentDidMount: function (e) {
-      document.querySelector('footer').style.visibility="hidden";
+    getInitialState: function () {
+        return {
+            filter: Todo.ALL
+        };
+    },
+
+    navigate: function (e) {
+      console.log(e.currentTarget.href);
+      this.props.router.setRoute(e.currentTarget.href);
+      e.preventDefault();
     },
 
     render: function () {
           var todos = this.props.todos,
               totalComplete = _.filter(todos, "complete").length,
-              totalIncomplete = todos.length - totalComplete,
-              getFooter = document.querySelector('footer');
+              totalIncomplete = todos.length - totalComplete;
     
-              if(todos == null || todos.length == 0){
-                  if (getFooter == null) {
-                      console.log(todos);
-                  } else {
-                      document.querySelector('footer').style.visibility="hidden";
-                    }
-              } else {
-                  document.querySelector('footer').style.visibility="visible";
-                };
+              // hide footer if todos === 0
+              if(!todos || todos.length === 0){
+                return (<footer></footer>);
+              }
 
+              //Clear Completed === 0 --> Hide button clear-completed
+              if(!totalComplete || totalComplete === 0){
+                return (
+                  <footer id="footer">
+                      <span id="todo-count">
+                          <strong>{totalIncomplete}</strong> todos restante
+                      </span>
+
+                      <ul id="filters">
+                        <li>
+                          <a href="/" className="selected" onClick={this.navigate}>All</a>
+                        </li>
+                        <li>
+                          <a href="active" onClick={this.navigate}>Active</a>
+                        </li>
+                        <li>
+                          <a href="completed" onClick={this.navigate}>Completed</a>
+                        </li>
+                      </ul>
+                  </footer>
+                );
+              }
+
+        //Clear Completed > 0 --> Show button clear-completed
         return (
             <footer id="footer">
                 <span id="todo-count">
@@ -33,13 +63,13 @@ module.exports = React.createClass({
 
                 <ul id="filters">
                   <li>
-                    <a href="all" className="selected">All</a>
+                    <a href="/" className="selected" onClick={this.navigate}>All</a>
                   </li>
                   <li>
-                    <a href="active">Active</a>
+                    <a href="active" onClick={this.navigate}>Active</a>
                   </li>
                   <li>
-                    <a href="completed">Completed</a>
+                    <a href="completed" onClick={this.navigate}>Completed</a>
                   </li>
                 </ul>
 

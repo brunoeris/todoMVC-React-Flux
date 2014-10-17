@@ -1,11 +1,14 @@
+/*jshint node:true, undef:true, unused:true*/
+
+"use strict";
+
 var React = require("react/addons"),
 
 	Evt = require("Constants").Evt,
 	Act = require("Constants").Act,
 
 	TodoStore = require("stores/TodoStore"),
-	TodoAction = require("actions/TodoAction"),
-	Footer = require("components/Footer");
+	TodoAction = require("actions/TodoAction");
 
 module.exports = React.createClass({
 	getInitialState: function () {
@@ -40,8 +43,9 @@ module.exports = React.createClass({
 
 	remove: function (e) {
 		TodoAction.remove(this.props.todo.id);
+		e.preventDefault();
 	},
-
+	
 	save: function (e) {
 		var title = e.currentTarget.value.trim(),
 			todo = this.props.todo;

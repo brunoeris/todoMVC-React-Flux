@@ -1,5 +1,4 @@
-/*jslint node:true, nomen:true, white:true, todo:true*/
-/*global $*/
+/*jshint node:true, undef:true, unused:true*/
 
 "use strict";
 
