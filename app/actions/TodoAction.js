@@ -9,10 +9,6 @@ var Dispatcher = require("Dispatcher"),
 
 module.exports = {
 
-	/**
-	 * Método para adicionar um novo todo ou atualizar um existente.
-	 */
-
 	filter: function (filter) {
 		Dispatcher.dispatch({
 			action: Act.FILTER,
@@ -20,6 +16,10 @@ module.exports = {
 			data: filter
 		});
 	},
+
+	/**
+	 * Método para adicionar um novo todo ou atualizar um existente.
+	 */
 
 	save: function (todo) {
 		Dispatcher.dispatch({

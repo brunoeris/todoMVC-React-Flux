@@ -26,7 +26,7 @@ module.exports = React.createClass({
               totalComplete = _.filter(todos, "complete").length,
               totalIncomplete = todos.length - totalComplete;
     
-              // hide footer if todos === 0
+              // hide footer if todos === 0 or null
               if(!todos || todos.length === 0){
                 return (<footer></footer>);
               }
@@ -36,7 +36,7 @@ module.exports = React.createClass({
                 return (
                   <footer id="footer">
                       <span id="todo-count">
-                          <strong>{totalIncomplete}</strong> todos restante
+                          <strong>{totalIncomplete}</strong> {todos.length === 1 ? "item left" : "items left"}
                       </span>
 
                       <ul id="filters">
@@ -58,7 +58,7 @@ module.exports = React.createClass({
         return (
             <footer id="footer">
                 <span id="todo-count">
-                    <strong>{totalIncomplete}</strong> todos restante
+                    <strong>{totalIncomplete}</strong> {todos.length === 1 ? "item left" : "items left"}
                 </span>
 
                 <ul id="filters">

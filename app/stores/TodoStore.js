@@ -27,6 +27,7 @@ var _ = require("lodash"),
 
 _filter = function (filter) {
     console.log(filter);
+    console.log("rhrrr");
 };
 
 // Cria ou atualiza um item
@@ -57,7 +58,7 @@ _remove = function (id) {
     localStorage.setItem("todos", JSON.stringify(_todos));
 };
 
-_removeCompletos = function(){
+_removeCompletos = function () {
     _.remove(_todos, {"complete": true});
 
     localStorage.setItem("todos", JSON.stringify(_todos));

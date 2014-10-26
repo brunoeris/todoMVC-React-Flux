@@ -25,10 +25,17 @@ module.exports = React.createClass({
          var routes = {
                 '/': function () {
                     TodoAction.filter(Todo.ALL);
+                    console.log("ALL");
                 },
-                '/active': TodoAction.filter.bind(this, Todo.ACTIVE),
+                //djalma's crazy syntax
+                //'/active': TodoAction.filter.bind(this, Todo.ACTIVE),
+                '/active': function () {
+                    TodoAction.filter(Todo.ACTIVE);
+                    console.log("ACTIVE");
+                },
                 '/completed': function () {
                     TodoAction.filter(Todo.COMPLETED);
+                    console.log("COMPLETED");
                 }
               };
 
@@ -45,6 +52,7 @@ module.exports = React.createClass({
 
     handleRequestSuccess: function (payload) {
         switch (payload.action) {
+            case Act.FILTER:
             case Act.SAVE:
             case Act.SAVE_ALL:
             case Act.REMOVE:
@@ -56,11 +64,18 @@ module.exports = React.createClass({
 
     render: function () {
         return (
-            <section id="todoapp">
-                <Header />
-                <Main todos = {this.state.todos}/>
-                <Footer todos = {this.state.todos} routes={this.router}/>
-            </section>
+            <div>
+                <section id="todoapp">
+                    <Header />
+                    <Main todos = {this.state.todos}/>
+                    <Footer todos = {this.state.todos} routes={this.router}/>
+                </section>
+
+                <footer id="info">
+                    <p>Double-click to edit a todo</p>
+                    <p>Part of <a href="http://todomvc.com">TodoMVC</a></p>
+                </footer>
+            </div>
         );
     }
 });

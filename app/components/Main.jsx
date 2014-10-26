@@ -24,6 +24,13 @@ module.exports = React.createClass({
 	},
 
     render: function () {
+    	var todos = this.props.todos;
+
+    	//hide and show checkboxALL
+    	if(!todos || todos.length === 0){
+                return (<div></div>);
+        }
+
         return (
         	<section id="main">
                 <ul id="todo-list">
