@@ -4,6 +4,7 @@
 "use strict";
 
 var _ = require("lodash"),
+Todo = require("Constants").Todo,
     
     // Constants
     Evt = require("Constants").Evt,
@@ -26,8 +27,25 @@ var _ = require("lodash"),
     _remove;
 
 _filter = function (filter) {
+   
+    if (filter === Todo.COMPLETED) {
+        /*_todos = _.filter(_todos, 'complete');
+        localStorage.setItem("todos", JSON.stringify(_todos));
+        console.log(_todos);*/
+        console.log("store_COMPLETED");
+    } else if (filter === Todo.ACTIVE) {
+        /*_todos = _.filter(_todos, {'complete' : false});
+        localStorage.setItem("todos", JSON.stringify(_todos));
+        console.log(_todos);*/
+        console.log("store_ACTIVE");
+    } else if (filter === Todo.ALL) {
+        /*_todos = _.filter(_todos);
+        localStorage.setItem("todos", JSON.stringify(_todos));
+        console.log(_todos);*/
+        console.log("store_ALL");
+    }
+    localStorage.setItem("todos", JSON.stringify(_todos));
     console.log(filter);
-    console.log("rhrrr");
 };
 
 // Cria ou atualiza um item

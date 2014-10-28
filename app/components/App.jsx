@@ -27,7 +27,7 @@ module.exports = React.createClass({
                     TodoAction.filter(Todo.ALL);
                     console.log("ALL");
                 },
-                //djalma's crazy syntax
+                //another syntax
                 //'/active': TodoAction.filter.bind(this, Todo.ACTIVE),
                 '/active': function () {
                     TodoAction.filter(Todo.ACTIVE);
@@ -38,10 +38,8 @@ module.exports = React.createClass({
                     console.log("COMPLETED");
                 }
               };
-
-        var router = Router(routes);
         
-        router.configure({html5history:true}).init();
+        this.router = new Router(routes).configure({html5history:true}).init();
 
         TodoStore.subscribe(Evt.REQUEST_SUCCESS, this.handleRequestSuccess);
     },

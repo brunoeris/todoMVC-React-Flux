@@ -74,11 +74,11 @@ module.exports = React.createClass({
                 
                 {this.state.isEditing ?
                 	<input
-                		autoFocus = {true}
-                		onBlur={this.toggleEdit}
-                		onKeyDown={this.save}
                 		type="text" 
                 		className="edit" 
+                		onBlur={this.toggleEdit}
+                		autoFocus={true}
+                		onKeyDown={this.save}
                 		defaultValue={todo.title} /> :
                 	<label>{todo.title}</label>
                 }
