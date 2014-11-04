@@ -27,22 +27,28 @@ Todo = require("Constants").Todo,
     _remove;
 
 _filter = function (filter) {
+
+    var todo = _todos,
+        totalComplete = _.filter(todo, "complete"),
+        totalIncomplete = _.filter(todo, {"complete" : false});
    
     if (filter === Todo.COMPLETED) {
         /*_todos = _.filter(_todos, 'complete');
         localStorage.setItem("todos", JSON.stringify(_todos));
         console.log(_todos);*/
-        console.log("store_COMPLETED");
+        console.log(totalComplete);
+        return totalComplete;
     } else if (filter === Todo.ACTIVE) {
         /*_todos = _.filter(_todos, {'complete' : false});
         localStorage.setItem("todos", JSON.stringify(_todos));
         console.log(_todos);*/
-        console.log("store_ACTIVE");
+        console.log(totalIncomplete);
+        return totalIncomplete;
     } else if (filter === Todo.ALL) {
         /*_todos = _.filter(_todos);
-        localStorage.setItem("todos", JSON.stringify(_todos));
-        console.log(_todos);*/
-        console.log("store_ALL");
+        localStorage.setItem("todos", JSON.stringify(_todos));*/
+        console.log(_todos);
+        return _todos;
     }
     localStorage.setItem("todos", JSON.stringify(_todos));
     console.log(filter);
