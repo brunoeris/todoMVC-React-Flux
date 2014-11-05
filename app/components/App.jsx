@@ -14,34 +14,32 @@ var React = require("react"),
     Router = require("director").Router;
 
 module.exports = React.createClass({
-
     getInitialState: function () {
         return {
-            todos: TodoStore.getTodos()
+            todos: TodoStore.getFiltered()
         };
     },
 
     componentWillMount: function () {
-         var routes = {
-                '/': function () {
+        var routes = {
+                "/": function () {
                     TodoAction.filter(Todo.ALL);
-                    console.log("ALL");
                 },
                 //another syntax
-                //'/active': TodoAction.filter.bind(this, Todo.ACTIVE),
-                '/active': function () {
+                //"/active": TodoAction.filter.bind(this, Todo.ACTIVE),
+                "/active": function () {
                     TodoAction.filter(Todo.ACTIVE);
-                    console.log("ACTIVE");
                 },
-                '/completed': function () {
+                "/completed": function () {
                     TodoAction.filter(Todo.COMPLETED);
-                    console.log("COMPLETED");
                 }
-              };
+            };
         
-        this.router = new Router(routes).configure({html5history:true}).init();
-
         TodoStore.subscribe(Evt.REQUEST_SUCCESS, this.handleRequestSuccess);
+
+        this.router = new Router(routes)
+            .configure({html5history:true})
+            .init();
     },
 
     componentWillUnmount: function () {
@@ -55,7 +53,7 @@ module.exports = React.createClass({
             case Act.SAVE_ALL:
             case Act.REMOVE:
             case Act.REMOVE_ALL:
-                this.setState({todos: TodoStore.getTodos()});
+                this.setState({todos: TodoStore.getFiltered()});
                 break;
         }
     },
@@ -65,8 +63,8 @@ module.exports = React.createClass({
             <div>
                 <section id="todoapp">
                     <Header />
-                    <Main todos = {this.state.todos}/>
-                    <Footer todos = {this.state.todos} routes={this.router}/>
+                    <Main todos={this.state.todos}/>
+                    <Footer routes={this.router}/>
                 </section>
 
                 <footer id="info">

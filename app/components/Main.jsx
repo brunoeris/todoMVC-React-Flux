@@ -1,24 +1,14 @@
-/*jshint node:true, undef:true, unused:true*/
+/*jshint node:true, undef:true, unused:true, newcap:false*/
 
 "use strict";
 
 var _ = require("lodash"),
 	React = require("react"),
-
-	Evt = require("Constants").Evt,
-	Act = require("Constants").Act,
-
 	TodoStore = require("stores/TodoStore"),
 	TodoAction = require("actions/TodoAction"),
 	Todo = require("components/Todo");
 
 module.exports = React.createClass({
-	getInitialState: function () {
-		return {
-			todos: this.props.todos
-		};
-	},
-
 	toggleAll: function (e) {
 		TodoAction.saveAll(e.currentTarget.checked);
 	},
@@ -28,13 +18,13 @@ module.exports = React.createClass({
 
     	//hide and show checkboxALL
     	if(!todos || todos.length === 0){
-                return (<div></div>);
+            return (<div></div>);
         }
 
         return (
         	<section id="main">
                 <ul id="todo-list">
-                	{_.map(this.state.todos, function (todo) {
+                	{_.map(todos, function (todo) {
                 		return (<Todo key={todo.id} todo={todo} />);
                 	})}
                 </ul>

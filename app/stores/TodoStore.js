@@ -4,7 +4,7 @@
 "use strict";
 
 var _ = require("lodash"),
-Todo = require("Constants").Todo,
+    Todo = require("Constants").Todo,
     
     // Constants
     Evt = require("Constants").Evt,
@@ -18,6 +18,7 @@ Todo = require("Constants").Todo,
 
     // Variáveis privadas
     _todos = JSON.parse(localStorage.getItem("todos")) || [],
+    _currentFilter = Todo.ALL,
 
     // Métodos privados
     _filter,
@@ -27,31 +28,7 @@ Todo = require("Constants").Todo,
     _remove;
 
 _filter = function (filter) {
-
-    var todo = _todos,
-        totalComplete = _.filter(todo, "complete"),
-        totalIncomplete = _.filter(todo, {"complete" : false});
-   
-    if (filter === Todo.COMPLETED) {
-        /*_todos = _.filter(_todos, 'complete');
-        localStorage.setItem("todos", JSON.stringify(_todos));
-        console.log(_todos);*/
-        console.log(totalComplete);
-        return totalComplete;
-    } else if (filter === Todo.ACTIVE) {
-        /*_todos = _.filter(_todos, {'complete' : false});
-        localStorage.setItem("todos", JSON.stringify(_todos));
-        console.log(_todos);*/
-        console.log(totalIncomplete);
-        return totalIncomplete;
-    } else if (filter === Todo.ALL) {
-        /*_todos = _.filter(_todos);
-        localStorage.setItem("todos", JSON.stringify(_todos));*/
-        console.log(_todos);
-        return _todos;
-    }
-    localStorage.setItem("todos", JSON.stringify(_todos));
-    console.log(filter);
+    _currentFilter = filter;
 };
 
 // Cria ou atualiza um item
@@ -83,13 +60,32 @@ _remove = function (id) {
 };
 
 _removeCompletos = function () {
-    _.remove(_todos, {"complete": true});
-
+    _.remove(_todos, {complete: true});
     localStorage.setItem("todos", JSON.stringify(_todos));
 };
 
 TodoStore.getTodos = function () {
     return _todos;
+};
+
+TodoStore.getFiltered = function () {
+    var filtered = _todos;
+
+    switch (_currentFilter) {
+        case Todo.COMPLETED:
+            filtered = _.filter(_todos, "complete");
+            break;
+
+        case Todo.ACTIVE:
+            filtered = _.filter(_todos, {complete: false});
+            break;
+    }
+
+    return filtered;
+};
+
+TodoStore.getCurrentFilter = function () {
+    return _currentFilter;
 };
 
 TodoStore.isAllComplete = function () {
